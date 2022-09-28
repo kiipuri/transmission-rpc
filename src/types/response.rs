@@ -74,16 +74,30 @@ impl RpcResponseArgument for PortTest {}
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct Torrent {
+    #[serde(rename = "activityDate")]
+    pub activity_date: Option<i64>,
     #[serde(rename = "addedDate")]
     pub added_date: Option<i64>,
+    // TODO: what
+    // pub availability: Option<i64>,
+    #[serde(rename = "bandwidthPriority")]
+    pub bandwidth_priority: Option<i64>,
+    pub comment: Option<String>,
+    #[serde(rename = "corruptEver")]
+    pub corrupt_ever: Option<i64>,
+    pub creator: Option<String>,
     #[serde(rename = "doneDate")]
     pub done_date: Option<i64>,
     #[serde(rename = "downloadDir")]
     pub download_dir: Option<String>,
-    pub error: Option<i64>,
     #[serde(rename = "errorString")]
     pub error_string: Option<String>,
     pub eta: Option<i64>,
+    pub files: Option<Vec<File>>,
+    #[serde(rename = "fileStats")]
+    pub file_stats: Option<Vec<FileStat>>,
+    #[serde(rename = "hashString")]
+    pub hash_string: Option<String>,
     pub id: Option<i64>,
     #[serde(rename = "isFinished")]
     pub is_finished: Option<bool>,
@@ -94,8 +108,6 @@ pub struct Torrent {
     #[serde(rename = "metadataPercentComplete")]
     pub metadata_percent_complete: Option<f32>,
     pub name: Option<String>,
-    #[serde(rename = "hashString")]
-    pub hash_string: Option<String>,
     #[serde(rename = "peersConnected")]
     pub peers_connected: Option<i64>,
     #[serde(rename = "peersGettingFromUs")]
@@ -104,6 +116,8 @@ pub struct Torrent {
     pub peers_sending_to_us: Option<i64>,
     #[serde(rename = "percentDone")]
     pub percent_done: Option<f32>,
+    /// for each file in files, their download priority (low:-1,normal:0,high:1)
+    pub priorities: Option<Vec<i8>>,
     #[serde(rename = "rateDownload")]
     pub rate_download: Option<i64>,
     #[serde(rename = "rateUpload")]
@@ -122,13 +136,8 @@ pub struct Torrent {
     pub upload_ratio: Option<f32>,
     #[serde(rename = "uploadedEver")]
     pub uploaded_ever: Option<i64>,
-    pub files: Option<Vec<File>>,
     /// for each file in files, whether or not they will be downloaded (0 or 1)
     pub wanted: Option<Vec<i8>>,
-    /// for each file in files, their download priority (low:-1,normal:0,high:1)
-    pub priorities: Option<Vec<i8>>,
-    #[serde(rename = "fileStats")]
-    pub file_stats: Option<Vec<FileStat>>,
 }
 
 #[derive(Deserialize, Debug, Clone)]
@@ -142,7 +151,7 @@ pub struct Stats {
     #[serde(rename = "secondsActive")]
     pub seconds_active: i64,
     #[serde(rename = "sessionCount")]
-    pub session_count: Option<i32>
+    pub session_count: Option<i32>,
 }
 
 #[derive(Deserialize, Debug)]
@@ -186,10 +195,9 @@ pub struct TorrentAdded {
 impl RpcResponseArgument for TorrentAdded {}
 
 #[derive(Deserialize, Debug)]
-pub struct TorrentRenamePath{
+pub struct TorrentRenamePath {
     pub path: Option<String>,
     pub name: Option<String>,
     pub id: Option<i64>,
-
 }
 impl RpcResponseArgument for TorrentRenamePath {}
