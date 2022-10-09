@@ -14,15 +14,21 @@ pub trait RpcResponseArgument {}
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct SessionGet {
+    #[serde(rename = "alt-speed-down")]
+    pub alt_speed_down: i64,
+    #[serde(rename = "alt-speed-enabled")]
+    pub alt_speed_enabled: bool,
+    #[serde(rename = "alt-speed-up")]
+    pub alt_speed_up: i64,
     #[serde(rename = "blocklist-enabled")]
     pub blocklist_enabled: bool,
     #[serde(rename = "download-dir")]
     pub download_dir: String,
     pub encryption: String,
-    #[serde(rename = "rpc-version")]
-    pub rpc_version: i32,
     #[serde(rename = "rpc-version-minimum")]
     pub rpc_version_minimum: i32,
+    #[serde(rename = "rpc-version")]
+    pub rpc_version: i32,
     pub version: String,
 }
 impl RpcResponseArgument for SessionGet {}
@@ -114,7 +120,8 @@ pub struct Torrent {
     pub files: Option<Vec<File>>,
     #[serde(rename = "fileStats")]
     pub file_stats: Option<Vec<FileStat>>,
-    pub group: Option<String>,
+    // TODO: returns 0
+    // pub group: Option<String>,
     #[serde(rename = "hashString")]
     pub hash_string: Option<String>,
     #[serde(rename = "haveUnchecked")]
@@ -130,7 +137,8 @@ pub struct Torrent {
     pub is_private: Option<bool>,
     #[serde(rename = "isStalled")]
     pub is_stalled: Option<bool>,
-    pub labels: Option<Vec<String>>,
+    // TODO: returns 0
+    // pub labels: Option<Vec<String>>,
     #[serde(rename = "leftUntilDone")]
     pub left_until_done: Option<i64>,
     #[serde(rename = "magnetLink")]
@@ -190,8 +198,9 @@ pub struct Torrent {
     pub start_date: Option<i64>,
     pub status: Option<i64>,
     pub trackers: Option<Vec<Trackers>>,
-    #[serde(rename = "trackerList")]
-    pub tracker_list: Option<String>,
+    // TODO: returns 0
+    // #[serde(rename = "trackerList")]
+    // pub tracker_list: Option<String>,
     #[serde(rename = "trackerStats")]
     pub tracker_stats: Option<Vec<TrackerStats>>,
     #[serde(rename = "totalSize")]
